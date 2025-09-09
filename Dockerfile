@@ -23,7 +23,7 @@ FROM base AS runner
 COPY package*.json ./
 
 # Install only production app dependencies
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 
 # Bundle app source
 COPY . .
