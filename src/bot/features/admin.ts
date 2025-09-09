@@ -7,9 +7,7 @@ import { Composer } from 'grammy'
 
 const composer = new Composer<Context>()
 
-const feature = composer
-  .chatType('private')
-  .filter(isAdmin)
+const feature = composer.chatType('private').filter(isAdmin)
 
 feature.command(
   'setcommands',
@@ -17,5 +15,9 @@ feature.command(
   chatAction('typing'),
   setCommandsHandler,
 )
+
+feature.command('start', logHandle('command-admin-start'), async (ctx) => {
+  setCommandsHandler(ctx)
+})
 
 export { composer as adminFeature }

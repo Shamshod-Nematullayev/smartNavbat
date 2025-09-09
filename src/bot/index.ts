@@ -5,7 +5,7 @@ import type { BotConfig } from 'grammy'
 import { adminFeature } from '#root/bot/features/admin.js'
 import { languageFeature } from '#root/bot/features/language.js'
 import { unhandledFeature } from '#root/bot/features/unhandled.js'
-import { welcomeFeature } from '#root/bot/features/welcome.js'
+import { userFeature } from '#root/bot/features/user.js'
 import { errorHandler } from '#root/bot/handlers/error.js'
 import { i18n, isMultipleLocales } from '#root/bot/i18n.js'
 import { session } from '#root/bot/middlewares/session.js'
@@ -61,7 +61,7 @@ export function createBot(token: string, dependencies: Dependencies, botConfig?:
   protectedBot.use(i18n)
 
   // Handlers
-  protectedBot.use(welcomeFeature)
+  protectedBot.use(userFeature)
   protectedBot.use(adminFeature)
   if (isMultipleLocales)
     protectedBot.use(languageFeature)

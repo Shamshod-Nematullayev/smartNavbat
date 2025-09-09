@@ -17,7 +17,10 @@ const schema = new Schema<ITurn>({
   user_id: Number,
   value: Number,
   status: {
+    required: true,
+    type: String,
     enum: [TurnStatus.waiting, TurnStatus.called, TurnStatus.deleted],
+    default: TurnStatus.waiting,
   },
   message_id: Number,
 })
