@@ -3,7 +3,7 @@ import { isAdmin } from '#root/bot/filters/is-admin.js'
 import { logHandle } from '#root/bot/helpers/logging.js'
 import { sendOrUpdateTurnMessage } from '#root/bot/helpers/sendOrUpdateTurnMessage.js'
 import { updateAllTurns } from '#root/bot/helpers/updateAllTurns.js'
-import { Turn } from '#root/db/models/Turn.js'
+import { Turn, TurnStatus } from '#root/db/models/Turn.js'
 import { User } from '#root/db/models/User.js'
 import { Composer } from 'grammy'
 
@@ -42,7 +42,10 @@ feature.on(':contact', logHandle('contact'), async (ctx, next) => {
 })
 
 feature.command('stop', logHandle('command-stop'), async (ctx, next) => {
-  const turn = await Turn.findOneAndDelete({ user_id: ctx.from.id })
+  const turn = await Turn.findOneAndUpdate(
+    { user_id: ctx.from.id },
+    { $set: { status: TurnStatus.deleted } },
+  )
   if (!turn)
     return await next()
 

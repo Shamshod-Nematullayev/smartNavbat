@@ -32,13 +32,19 @@ export async function setCommandsHandler(ctx: CommandContext<Context>) {
   addCommandLocalizations(start)
   addCommandToChats(start, ctx.config.botAdmins)
 
-  const stop = new Command('stop', i18n.t('uz', 'stop.description')).addToScope(
+  const list = new Command('list', i18n.t('uz', 'list.description')).addToScope(
     { type: 'all_private_chats' },
   )
-  addCommandLocalizations(stop)
-  addCommandToChats(stop, ctx.config.botAdmins)
+  addCommandLocalizations(list)
+  addCommandToChats(list, ctx.config.botAdmins)
 
-  const commands = new CommandGroup().add(start).add(stop)
+  const call = new Command('call', i18n.t('uz', 'call.description')).addToScope(
+    { type: 'all_private_chats' },
+  )
+  addCommandLocalizations(call)
+  addCommandToChats(call, ctx.config.botAdmins)
+
+  const commands = new CommandGroup().add(start).add(list).add(call)
 
   await commands.setCommands(ctx)
 

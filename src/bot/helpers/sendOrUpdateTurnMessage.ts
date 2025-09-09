@@ -5,14 +5,21 @@ import { Turn, TurnStatus } from '#root/db/models/Turn.js'
  * Helper: Turn message yaratish yoki yangilash
  */
 export async function sendOrUpdateTurnMessage(ctx: Context, userId: number) {
-  let turnDoc = await Turn.findOne({ user_id: userId })
+  let turnDoc = await Turn.findOne({
+    user_id: userId,
+    status: TurnStatus.waiting,
+  })
   let turn = 1
 
   if (!turnDoc) {
     const lastTurn = await Turn.findOne().sort({ value: -1 })
     turn = lastTurn ? lastTurn.value + 1 : 1
 
-    turnDoc = await Turn.create({ user_id: userId, value: turn })
+    turnDoc = await Turn.create({
+      user_id: userId,
+      value: turn,
+      username: ctx.from?.first_name,
+    })
   }
   else {
     turn = turnDoc.value

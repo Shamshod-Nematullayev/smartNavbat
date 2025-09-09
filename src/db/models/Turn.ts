@@ -8,13 +8,16 @@ export enum TurnStatus {
 
 interface ITurn {
   user_id: number
+  username: string
   value: number
   status: TurnStatus
   message_id?: number
+  admin_id?: number
 }
 
 const schema = new Schema<ITurn>({
   user_id: Number,
+  username: String,
   value: Number,
   status: {
     required: true,
@@ -23,6 +26,7 @@ const schema = new Schema<ITurn>({
     default: TurnStatus.waiting,
   },
   message_id: Number,
+  admin_id: Number,
 })
 
 export const Turn = model<ITurn>('Turn', schema)
