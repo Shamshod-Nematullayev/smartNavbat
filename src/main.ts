@@ -6,6 +6,7 @@ import type { RunnerHandle } from '@grammyjs/runner'
 import process from 'node:process'
 import { createBot } from '#root/bot/index.js'
 import { config } from '#root/config.js'
+import { connectDB } from '#root/db/index.js'
 import { logger } from '#root/logger.js'
 import { createServer, createServerManager } from '#root/server/index.js'
 import { run } from '@grammyjs/runner'
@@ -86,6 +87,7 @@ async function startWebhook(config: WebhookConfig) {
 }
 
 try {
+  await connectDB()
   if (config.isWebhookMode)
     await startWebhook(config)
   else if (config.isPollingMode)
