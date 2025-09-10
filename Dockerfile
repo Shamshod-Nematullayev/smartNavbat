@@ -8,6 +8,8 @@ FROM base AS builder
 # Files required by npm install
 COPY package*.json ./
 
+RUN install -g npm
+
 # Install app dependencies
 RUN npm ci
 
